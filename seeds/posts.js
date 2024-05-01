@@ -10,6 +10,7 @@ exports.seed = async function (knex) {
       id: 1,
       post_body:
         "Welcome to Maggie's Moggies! Leave a post here about your projects, meetups, making crochet friends, and more!",
+        user_id: 1
     },
   ]);
 };
