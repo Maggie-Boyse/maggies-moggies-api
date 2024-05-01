@@ -3,7 +3,15 @@
  * @returns { Promise<void> }
  */
 exports.seed = async function (knex) {
-  // Deletes ALL existing entries
+  await knex("users").del();
+  await knex("users").insert([
+    {
+      id: 1,
+      email: "maggie_boyse@hotmail.com",
+      password: "moggie-admin866",
+      username: "maggies-moggies",
+    },
+  ]);
   await knex("patterns").del();
   await knex("patterns").insert([
     {
@@ -23,6 +31,15 @@ exports.seed = async function (knex) {
       user_id: 1,
     },
   ]);
+  await knex("posts").del();
+  await knex("posts").insert([
+    {
+      id: 1,
+      post_body:
+        "Welcome to Maggie's Moggies! Leave a post here about your projects, meetups, making crochet friends, and more!",
+      user_id: 1,
+    },
+  ]);
 };
-await knex();
 //// on front end src={`${SERVER_URL}${obj.pattern_image}`
+
