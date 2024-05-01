@@ -3,7 +3,7 @@ const router = express.Router();
 // const fs = require("fs");
 const knex = require("knex")(require("../knexfile"));
 
-router.get("/posts", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const postsData = await knex("posts")
       .join("users", "posts.user_id", "user_id")
@@ -16,6 +16,18 @@ router.get("/posts", async (req, res) => {
     res.status(200).json(postsData);
   } catch (error) {
     console.error("Error fetching posts:", error);
+    res.status(500).json(error);
+  }
+});
+
+router.post("/", async (req, res) => {
+  try {
+    const newPostData = req.body;
+    console.log(newPostData);
+    await knex("posts").insert(newPostData);
+    res.status(200).json(newPostData);
+  } catch (error) {
+    console.error("Error sending post:", error);
     res.status(500).json(error);
   }
 });
