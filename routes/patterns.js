@@ -2,22 +2,23 @@ const express = require("express");
 const router = express.Router();
 const knex = require("knex")(require("../knexfile"));
 
-// router.get("/", async (req, res) => {
-//   try {
-//     const postsData = await knex("patterns")
-//       .join("users", "posts.user_id", "user_id")
-//       .select(
-//         "posts.id",
-//         "users.username",
-//         "posts.post_body",
-//         "posts.created_at"
-//       );
-//     res.status(200).json(postsData);
-//   } catch (error) {
-//     console.error("Error fetching posts:", error);
-//     res.status(500).json(error);
-//   }
-// });
+router.get("/", async (req, res) => {
+  try {
+    const patternsData = await knex("patterns")
+      .join("users", "patterns.user_id", "user_id")
+      .select(
+        "patterns.id",
+        "patterns.pattern_title",
+        "users.username",
+        "patterns.pattern_body",
+        "patterns.created_at"
+      );
+    res.status(200).json(patternsData);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    res.status(500).json(error);
+  }
+});
 
 router.post("/", async (req, res) => {
   try {

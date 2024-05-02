@@ -5,6 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 const postsRoute = require("./routes/posts");
 const createPostRoute = require("./routes/posts");
+const patternsRoute = require("./routes/patterns");
 const createPatternRoute = require("./routes/patterns");
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "/public")));
 app.use("/api/posts", postsRoute);
 app.use("/api/posts", createPostRoute);
+app.use("/api/patterns", patternsRoute);
 app.use("/api/patterns", createPatternRoute);
 
 app.listen(PORT, (req, res) => {
