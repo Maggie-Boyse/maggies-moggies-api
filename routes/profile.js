@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // GET /profile/ - protected route, needs auth
-router.get('/', async (req, res) => {
+router.post("/login", async (req, res) => {
   // Check for authorization header (if not included, return 401)
   if (!req.headers.authorization) {
     return res.status(401).send("Please provide the token in authorization header");
