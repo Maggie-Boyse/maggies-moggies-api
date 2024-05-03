@@ -1,8 +1,25 @@
-const express = require('express')
+const express = require("express");
+const path = require("path");
+const cors = require("cors");
 
-const app = express()
-const port = 8080
+require("dotenv").config();
+const postsRoute = require("./routes/posts");
+const createPostRoute = require("./routes/posts");
+const patternsRoute = require("./routes/patterns");
+const createPatternRoute = require("./routes/patterns");
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`)
-})
+const app = express();
+const PORT = process.env.PORT || 8080;
+
+app.use(express.json());
+app.use(cors());
+
+app.use(express.static(path.join(__dirname, "/public")));
+app.use("/api/posts", postsRoute);
+app.use("/api/posts", createPostRoute);
+app.use("/api/patterns", patternsRoute);
+app.use("/api/patterns", createPatternRoute);
+
+app.listen(PORT, (req, res) => {
+  console.log(`Server listening on port ${PORT}`);
+});
