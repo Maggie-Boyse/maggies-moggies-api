@@ -3,9 +3,13 @@ const router = express.Router();
 const knex = require("knex")(require("../knexfile"));
 
 router.get("/", async (req, res) => {
+  const { keywords } = req.query;
+  const decodedKeywords = decodeURI(keywords);
+  console.log(keywords);
   try {
     const patternsData = await knex("patterns")
-      .join("users", "patterns.user_id", "user_id")
+      // .whereILike({ pattern_title: `%${decodedKeywords}%` })
+      .join("users", "users.id", "patterns.user_id")
       .select(
         "patterns.id",
         "patterns.pattern_title",
