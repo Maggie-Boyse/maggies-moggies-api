@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
         username: user.username,
       },
       JWT_SECRET,
-      { expiresIn: "30m" }
+      { expiresIn: "30min" }
     );
 
     res.status(200).json({ token: authToken, username: user.username });
@@ -64,10 +64,12 @@ router.post("/login", async (req, res) => {
       username: user.username,
     },
     JWT_SECRET,
-    { expiresIn: "30m" }
+    { expiresIn: "30min" }
   );
 
-  res.status(200).json({ token: authToken, username: user.username });
+  res
+    .status(200)
+    .json({ token: authToken, username: user.username, user_id: user.id });
 });
 
 module.exports = router;

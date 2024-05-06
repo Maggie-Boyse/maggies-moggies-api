@@ -5,7 +5,7 @@ const knex = require("knex")(require("../knexfile"));
 router.get("/", async (req, res) => {
   try {
     const postsData = await knex("posts")
-      .join("users", "posts.user_id", "user_id")
+      .join("users", "users.id", "user_id")
       .select(
         "posts.id",
         "users.username",
@@ -23,14 +23,14 @@ router.post("/", async (req, res) => {
   try {
     const newPostData = req.body;
     console.log(newPostData);
-    await knex("posts").insert(newPostData);
+    await knex("posts")
+      .join("users", "users.id", "username")
+      .insert(newPostData);
     res.status(200).json(newPostData);
   } catch (error) {
     console.error("Error sending post:", error);
     res.status(500).json(error);
   }
 });
-
-
 
 module.exports = router;
