@@ -47,7 +47,9 @@ router.post("/", async (req, res) => {
   try {
     const newPatternData = req.body;
     console.log(newPatternData);
-    await knex("patterns").insert(newPatternData);
+    await knex("patterns")
+      .join("users", "users.id", "username")
+      .insert(newPatternData);
     res.status(200).json(newPatternData);
   } catch (error) {
     console.error("Error sending pattern:", error);

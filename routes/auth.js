@@ -72,4 +72,19 @@ router.post("/login", async (req, res) => {
     .json({ token: authToken, username: user.username, user_id: user.id });
 });
 
+router.delete("/:id", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const userAccount = await knex("users").where({ id: userId }).first();
+    if (!userAccount) {
+      return res.status(404).json({ message: "user account not found" });
+    }
+    await knex("users").where({ id: userId }).del();
+    res.sendStatus(204);
+  } catch (error) {
+    console.error("error deleting inventory item", error);
+    res.status(500).json({ error: "ineternal server error" });
+  }
+});
+
 module.exports = router;
